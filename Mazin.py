@@ -1,11 +1,21 @@
 import random
+import os
 
 maze = [
-    list("#.....p..#"),
-    list("#........#"),
-    list("#........#"),
-    list("#..g...###"),
-    list("#......###")]
+    list("####################"),
+    list("#p.....#..........#"),
+    list("#.###.#.#.######..#"),
+    list("#...#.#.#......#..#"),
+    list("###.#.#.######.#..#"),
+    list("#...#.#......#.#..#"),
+    list("#.###.######.#.#..#"),
+    list("#.....#......#.#..#"),
+    list("#.#####.######.#.g#"),
+    list("####################")]
+
+def clear():
+    print("\n" * 50)
+
 
 def print_maze(maze):
     for row in maze:
@@ -31,6 +41,10 @@ def Movement(maze: list, move: str)-> bool :
             ny = -1
         case "d":
             ny = 1
+        case _:
+            print("opps i don't understand")
+            return False
+
     nxf, nyf = nx+x, ny+y
     if maze[nxf][nyf] != "#":
         if maze[nxf][nyf] == "g":
@@ -49,21 +63,42 @@ def glitch_maze(maze: list)-> bool:
             if maze[row][col] == "#" and random.random() < 0.5:
                 maze[row][col] = "."
 
-while True:
-    #add a if that only runs 1 time 
-    print_maze(maze)
-    move = input("move")
-    win = Movement(maze, move)
-    if move == "qq":
-        break
-    if win:
-        print("you won")
-        quit = input("press q to quit or any key to play again")
-        if quit == "q":
+def playgame():
+    moves_done = 0
+    while True:
+        global first_time
+        #add a if that only runs 1 time
+        if first_time:
+            print("=" * 40)
+            print("        ⚡ GLITCH MAZE ⚡")
+            print("=" * 40)
+            print("Reach the goal (G) before the maze traps you!")
+            print("Controls: w-up, s-down, d-right, a-left ")
+            print("Special:The maze will GLITCH every few moves...")
+
+            print("=" * 40)
+            first_time = False
+        print_maze(maze)
+
+        move = input("move: ")
+        moves_done += 1
+
+        win = Movement(maze, move)
+
+        if move == "esc":
             break
-        else:
-            continue
 
+        if moves_done%3 == 0:
+            glitch_maze(maze)
 
+        if win:
+            print("you won")
+            break
+        clear()
 
+first_time = True
+while True:
+    playgame()
+    if input("play again! (y/n): ") != "y":
+        break
 
