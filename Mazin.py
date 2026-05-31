@@ -1,4 +1,4 @@
-from operator import truediv
+import random
 
 maze = [
     list("######p###"),
@@ -38,5 +38,14 @@ def Movement(maze: list, move: str)-> bool :
             return True
         maze[nxf][nyf] = "p"
         maze[x][y] = "."
-        return False
+    return False
+
+def glitch_maze(maze: list)-> bool:
+    for row in range(1, len(maze) -1):
+        for col in range(1, len(maze) -1):
+            if maze[row][col] == "." and random.random() < 0.5:
+                maze[row][col] = "#"
+            if maze[row][col] == "#" and random.random() < 0.5:
+                maze[row][col] = "."
+            
 
