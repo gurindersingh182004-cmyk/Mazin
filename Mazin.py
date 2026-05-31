@@ -75,6 +75,8 @@ def playgame():
             print("Reach the goal (G) before the maze traps you!")
             print("Controls: w-up, s-down, d-right, a-left ")
             print("Special:The maze will GLITCH every few moves...")
+            print()
+            print("(type 'es' as move to exit a game) ")
 
             print("=" * 40)
             first_time = False
@@ -85,7 +87,7 @@ def playgame():
 
         win = Movement(maze, move)
 
-        if move == "esc":
+        if move == "es":
             break
 
         if moves_done%3 == 0:
