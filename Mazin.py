@@ -1,23 +1,22 @@
 import random
 
 maze = [
-    list("######p###"),
-    list("#......###"),
-    list("#..###.###"),
-    list("#.#g##.###"),
-    list("###....###")]
+    list("#.....p..#"),
+    list("#........#"),
+    list("#........#"),
+    list("#..g...###"),
+    list("#......###")]
 
 def print_maze(maze):
     for row in maze:
         print("".join(row))
 
-def find_player():
+def find_player(maze: list):
     for i in range(len(maze)):
         for j in range(len(maze[i])):
             if maze[i][j] == "p":
                 return i,j
-            else:
-                return -1
+
 
 
 def Movement(maze: list, move: str)-> bool :
@@ -26,9 +25,9 @@ def Movement(maze: list, move: str)-> bool :
     match move:
         case "w":
             nx = -1
-        case "a":
-            nx = 1
         case "s":
+            nx = 1
+        case "a":
             ny = -1
         case "d":
             ny = 1
@@ -38,6 +37,8 @@ def Movement(maze: list, move: str)-> bool :
             return True
         maze[nxf][nyf] = "p"
         maze[x][y] = "."
+    else:
+        print("opps hit a wall")
     return False
 
 def glitch_maze(maze: list)-> bool:
@@ -47,5 +48,22 @@ def glitch_maze(maze: list)-> bool:
                 maze[row][col] = "#"
             if maze[row][col] == "#" and random.random() < 0.5:
                 maze[row][col] = "."
-            
+
+while True:
+    #add a if that only runs 1 time 
+    print_maze(maze)
+    move = input("move")
+    win = Movement(maze, move)
+    if move == "qq":
+        break
+    if win:
+        print("you won")
+        quit = input("press q to quit or any key to play again")
+        if quit == "q":
+            break
+        else:
+            continue
+
+
+
 
